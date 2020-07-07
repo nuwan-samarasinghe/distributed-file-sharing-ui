@@ -13,7 +13,8 @@
       <div class="card text-white bg-primary">
         <div class="card-body">
           <h4 class="card-title">Current Node</h4>
-          <!--<h5 th:text="${ipAddress}+':'+${port}" class="card-subtitle mb-2 text-muted"></h5>-->
+          <h5 *ngIf="nodeDetails!=undefined && nodeDetails.ipAddress!=undefined && nodeDetails.port!=undefined"
+              class="card-subtitle mb-2 text-muted">{{nodeDetails.ipAddress}}:{{nodeDetails.port}}</h5>
         </div>
       </div>
     </div>
@@ -21,7 +22,8 @@
       <div class="card text-white bg-primary">
         <div class="card-body">
           <h4 class="card-title">Node User Details</h4>
-          <!--<h5 th:text="${name}" class="card-subtitle mb-2 text-muted"></h5>-->
+          <h5 *ngIf="nodeDetails!=undefined && nodeDetails.userName!=undefined"
+              class="card-subtitle mb-2 text-muted">{{nodeDetails.userName}}</h5>
         </div>
       </div>
     </div>
@@ -38,18 +40,19 @@
               <h6 class="text-muted mt-2">Neighbour Nodes</h6>
             </div>
             <div class="col-md-4">
-              <!--<form method="post" th:action="@{/iptable}">
-                <button type="submit" class="btn btn-primary mb-2 btn-sm">Refresh</button>
-              </form>-->
+              <form>
+                <button type="button" class="btn btn-primary mb-2 btn-sm" (click)="onRefreshInitiated()">Refresh
+                </button>
+              </form>
             </div>
           </div>
           <div>
-            <ul class="list-group">
-              <!--<li th:each="city : ${neighbours}"
+            <ul class="list-group" *ngIf="routingTable!=undefined && routingTable.neighbours!=undefined">
+              <li *ngFor="let neighbour of routingTable.neighbours"
                   class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="badge badge-danger" th:text="'IP : '+${city.getAddress()}"></span>
-                <span class="badge badge-warning" th:text="'PORT : '+${city.getPort()}"></span>
-              </li>-->
+                <span *ngIf="neighbour.address!=undefined" class="badge badge-danger">IP : {{neighbour.address}}</span>
+                <span *ngIf="neighbour.port!=undefined" class="badge badge-warning">PORT : {{neighbour.port}}</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -63,14 +66,9 @@
           <h4 class="card-title">Current Node Files List</h4>
           <div>
             <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="badge badge-dark">Harry Potter</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="badge badge-dark">Tin Tin</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="badge badge-dark">Avengers</span>
+              <li *ngFor="let fileItem of fileNameList"
+                  class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="badge badge-dark">{{fileItem}}</span>
               </li>
             </ul>
           </div>
@@ -86,42 +84,32 @@
 
           <div class="row">
             <div class="col-md-6">
-              <form>
+              <form [formGroup]="searchForm">
                 <div class="form-group">
 
-                  <input type="email" class="form-control" id="exampleInputEmail1"
-                         aria-describedby="emailHelp" placeholder="Search File">
+                  <input formControlName="fileName" type="text" class="form-control" id="fileName" name="fileName"
+                         placeholder="Search File">
                 </div>
               </form>
             </div>
             <div class="col-md-2">
-              <button type="button" class="btn btn-primary">Search</button>
+              <button type="button" class="btn btn-primary" (click)="onSearchFileInitiated()">Search
+              </button>
             </div>
           </div>
 
           <h6 class="card-subtitle mb-2 text-muted">Search Result</h6>
           <div>
             <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="badge badge-light">Harry Potter</span>
-                <span class="badge badge-light">IP : 192.168.17.30</span>
-                <span class="badge badge-light">PORT : 33453</span>
-                <span class="badge badge-light">HOP : 5</span>
-                <button type="button" class="btn btn-outline-success btn-sm">Download</button>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="badge badge-light">Tin Tin</span>
-                <span class="badge badge-light">IP : 192.168.17.30</span>
-                <span class="badge badge-light">PORT : 33453</span>
-                <span class="badge badge-light">HOP : 5</span>
-                <button type="button" class="btn btn-outline-success btn-sm">Download</button>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="badge badge-light">Avengers</span>
-                <span class="badge badge-light">IP : 192.168.17.30</span>
-                <span class="badge badge-light">PORT : 33453</span>
-                <span class="badge badge-light">HOP : 5</span>
-                <button type="button" class="btn btn-outline-success btn-sm">Download</button>
+              <li *ngFor="let searchResult of searchResults"
+                  class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="badge badge-light">{{searchResult.fileName}}</span>
+                <span class="badge badge-light">IP : {{searchResult.address}}</span>
+                <span class="badge badge-light">PORT : {{searchResult.port}}</span>
+                <span class="badge badge-light">HOP : {{searchResult.hops}}</span>
+                <button type="button" class="btn btn-outline-success btn-sm"
+                        (click)="onDownloadInitiated(searchResult)">Download
+                </button>
               </li>
             </ul>
           </div>
