@@ -47,8 +47,8 @@
             </div>
           </div>
           <div>
-            <ul class="list-group" *ngIf="routingTable!=undefined && routingTable.neighbours!=undefined">
-              <li *ngFor="let neighbour of routingTable.neighbours"
+            <ul class="list-group" *ngIf="routingTable!=undefined && routingTable!=undefined">
+              <li *ngFor="let neighbour of routingTable"
                   class="list-group-item d-flex justify-content-between align-items-center">
                 <span *ngIf="neighbour.address!=undefined" class="badge badge-danger">IP : {{neighbour.address}}</span>
                 <span *ngIf="neighbour.port!=undefined" class="badge badge-warning">PORT : {{neighbour.port}}</span>

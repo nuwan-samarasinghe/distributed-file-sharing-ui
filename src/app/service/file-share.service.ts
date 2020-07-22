@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {NodeDetails} from '../models/node-details';
 import {RoutingTable} from '../models/routing-table';
 import {SearchDetails} from '../models/search-details';
+import {Neighbour} from '../models/neighbour';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class FileShareService {
     return this.httpClient.get<any>(`${environment.distributed_file_sharing_app_service}/file`);
   }
 
-  getRoutingTable(): Observable<RoutingTable> {
-    return this.httpClient.get<RoutingTable>(`${environment.distributed_file_sharing_app_service}/ip-table`);
+  getRoutingTable(): Observable<Neighbour[]> {
+    return this.httpClient.get<Neighbour[]>(`${environment.distributed_file_sharing_app_service}/ip-table`);
   }
 
   searchFiles(fileName: string): Observable<SearchDetails[]> {
@@ -32,5 +33,9 @@ export class FileShareService {
       .get<SearchDetails[]>(`${environment.distributed_file_sharing_app_service}/file/{fileName}`.replace('{fileName}', fileName));
   }
 
+  downloadFile(searchDetails: SearchDetails): Observable<any> {
+    return this.httpClient
+      .post<any>(`${environment.distributed_file_sharing_app_service}/file/download`, searchDetails);
+  }
 
 }

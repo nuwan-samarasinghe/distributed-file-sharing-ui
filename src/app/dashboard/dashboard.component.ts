@@ -4,6 +4,7 @@ import {NodeDetails} from '../models/node-details';
 import {RoutingTable} from '../models/routing-table';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SearchDetails} from '../models/search-details';
+import {Neighbour} from '../models/neighbour';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ export class DashboardComponent implements OnInit {
 
   nodeDetails: NodeDetails;
   fileNameList: any;
-  routingTable: RoutingTable;
+  routingTable: Neighbour[];
   searchForm: FormGroup;
   searchResults: SearchDetails[];
 
@@ -55,6 +56,8 @@ export class DashboardComponent implements OnInit {
   }
 
   onDownloadInitiated(searchResult: SearchDetails) {
-    console.log(searchResult);
+    this.fileShareService.downloadFile(searchResult).subscribe(file => {
+      console.log(file);
+    });
   }
 }
