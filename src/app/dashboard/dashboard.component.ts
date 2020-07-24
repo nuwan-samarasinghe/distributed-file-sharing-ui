@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FileShareService} from '../service/file-share.service';
 import {NodeDetails} from '../models/node-details';
-import {RoutingTable} from '../models/routing-table';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SearchDetails} from '../models/search-details';
 import {Neighbour} from '../models/neighbour';
@@ -18,6 +17,8 @@ export class DashboardComponent implements OnInit {
   routingTable: Neighbour[];
   searchForm: FormGroup;
   searchResults: SearchDetails[];
+  fileDownloadStatusText = undefined;
+  fileDownloadStatus = undefined;
 
   constructor(private fileShareService: FileShareService, private formBuilder: FormBuilder) {
   }
@@ -56,8 +57,9 @@ export class DashboardComponent implements OnInit {
   }
 
   onDownloadInitiated(searchResult: SearchDetails) {
-    this.fileShareService.downloadFile(searchResult).subscribe(file => {
-      console.log(file);
+    this.fileShareService.downloadFile(searchResult).subscribe(statusString => {
+      this.fileDownloadStatusText = statusString.message;
+      this.fileDownloadStatus = statusString.httpStatus;
     });
   }
 }
