@@ -1,24 +1,26 @@
 # DistributedFileSharingUI
 
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
 
-## Development server
+---
+## To Run the Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Step 01: Install Dependencies
+Install node dependencies using `npm install` command.
 
-## Code scaffolding
+### Step 02: Run the Application
+Use `ng serve` for run the front end web application.
+### Step 03: Open Application in Browser
+Navigate to `http://localhost:4200/`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
+---
+## To Build the Application
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-#Change Node & Start the UI
-if need to change connecting node please change the following files (``environment.ts``) ``distributed_file_sharing_app_service`` property with relevant service IP & PORT
+---
+## View Specified Node(Node Other Than Current Node) Data(Routing table,Files..etc)
+If you need to change connecting node please change the following files (``environment.ts``) ``distributed_file_sharing_app_service`` property with relevant service IP & PORT
 EX: ``distributed_file_sharing_app_service: 'https://<ip>:<port>'``
 then start the server different port ``ng serve --port 4401``
-
-## Further, help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
