@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {NodeDetails} from '../models/node-details';
-import {RoutingTable} from '../models/routing-table';
 import {SearchDetails} from '../models/search-details';
 import {Neighbour} from '../models/neighbour';
 
